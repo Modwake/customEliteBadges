@@ -1,5 +1,5 @@
 # customEliteBadges
-Allows custom elite badges based on level
+A Blackwake mod that allows custom elite badges based on level
 
 # Installation
 1. Install the required files inside **\RequiredFiles** into **\Blackwake\Blackwake_data\Managed**
