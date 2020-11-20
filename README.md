@@ -1,4 +1,4 @@
-# customEliteBadges
+# Custom Elite Badges
 A Blackwake mod that allows custom elite badges based on level
 
 # Installation
