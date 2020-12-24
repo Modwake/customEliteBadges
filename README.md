@@ -3,7 +3,7 @@ A Blackwake mod that allows custom elite badges based on level
 
 # Installation
 1. Install the required files inside **\RequiredFiles** into **\Blackwake\Blackwake_data\Managed**
- - **NOTE** you will have ot overwrite the existing **Assembly-CSharp.dll**
+ - **NOTE** you will have to overwrite the existing **Assembly-CSharp.dll**
 2. Launch your game, it should generate the following folder: **\Blackwake\Blackwake_data\Managed\Mods**
 3. Close the game, and place **customEliteBadges.dll** inside **\Managed\Mods**
 4. Place (either your own badge assets, or the included ones) inside **\Blackwake\Blackwake_data\Managed\Mods\Assets\Archie\Textures**
