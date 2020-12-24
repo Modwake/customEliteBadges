@@ -106,6 +106,7 @@ namespace customEliteBadges
             {
                 try
                 {
+                    Texture2D newBadgeTexture;
                     //æìíñèéçñîíí = prestige
                     //ïîñíñóóåîîñ = level
                     log("Got prestige: " + æìíñèéçñîíí);
@@ -113,26 +114,15 @@ namespace customEliteBadges
                     {
                         int currentBadge = 0;
                         log("Got level: " + ïîñíñóóåîîñ);
-                        for (int i = 0; i < levels.Count; i++)
-                        {
-                            log("Checking list: " + levels[i]);
-                            if (levels[i] > currentBadge && levels[i] <= ïîñíñóóåîîñ)
-                            {
-                                log("Found badge: " + levels[i]);
-                                currentBadge = levels[i];
-                            }
-                            else if (levels[i] > ïîñíñóóåîîñ)
-                            {
-                                log("Exiting");
-                                break;
-                            }
-                            
-                        }
-                        if (customBadges.TryGetValue(currentBadge, out Texture2D newBadgeTexture))
+                        int index = ~levels.BinarySearch(ïîñíñóóåîîñ);
+                        log($"-1 : {index - 1}, {index}, +1 {index + 1}");
+                        log("index goes: " + levels[index - 1]);
+                        if (customBadges.TryGetValue(levels[index - 1], out newBadgeTexture))
                         {
                             log($"Applying custom for -{æìíñèéçñîíí}- -{ïîñíñóóåîîñ}-");
                             __instance.éòëèïòëóæèó.texture = newBadgeTexture;
                         }
+                        return;
 
                     }
                 }
