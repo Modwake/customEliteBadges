@@ -22,7 +22,9 @@ namespace customEliteBadges
     {
 
         static Dictionary<int, Texture2D> customBadges = new Dictionary<int, Texture2D>();
-        static string texturesFilePath = "/Managed/Mods/Assets/Archie/Textures/";
+        static List<int> levels = new List<int>();
+
+        static string texturesFilePath = "/Managed/Mods/Assets/CustomEliteBadges/";
 
         static void log(string contents)
         {
@@ -31,6 +33,9 @@ namespace customEliteBadges
 
         void Start()
         {
+            //Setup harmony patching
+            HarmonyInstance harmony = HarmonyInstance.Create("com.github.archie");
+            harmony.PatchAll();
             initMod();
         }
 
@@ -45,14 +50,16 @@ namespace customEliteBadges
                     string[] lineContents = text[i].Split('=');
                     try
                     {
-                        newTexture = loadTexture(Application.dataPath + texturesFilePath + lineContents[1] + ".png", 100, 40);
+                        newTexture = loadTexture(lineContents[1], 100, 40);
                         customBadges.Add(Int32.Parse(lineContents[0]), newTexture);
+                        levels.Add(Int32.Parse(lineContents[0]));
                     }
                     catch (Exception e)
                     {
                         log(e.Message);
                     }
                 }
+                levels.Sort();
             }
             else
             {
@@ -68,11 +75,9 @@ namespace customEliteBadges
             }
             if (!File.Exists(Application.dataPath + "/Managed/Mods/customBadges.txt"))
             {
-                Directory.CreateDirectory(Application.dataPath + "/Managed/Mods/customBadges.txt");
+                string[] lines = { "100=silver", "200=default", "500=eyes" };
+                File.WriteAllLines(Application.dataPath + "/Managed/Mods/customBadges.txt", lines);
             }
-
-            string[] lines = { "100=silver", "200=default", "500=eyes" };
-            File.WriteAllLines(Application.dataPath + "/Managed/Mods/customBadges.txt", lines);
         }
 
         static Texture2D loadTexture(string texName, int imgWidth, int imgHeight)
@@ -103,21 +108,29 @@ namespace customEliteBadges
                 {
                     //æìíñèéçñîíí = prestige
                     //ïîñíñóóåîîñ = level
+                    log("Got prestige: " + æìíñèéçñîíí);
                     if (æìíñèéçñîíí >= 10)
                     {
                         int currentBadge = 0;
-                        foreach (var item in customBadges)
+                        log("Got level: " + ïîñíñóóåîîñ);
+                        for (int i = 0; i < levels.Count; i++)
                         {
-                            if (item.Key > ïîñíñóóåîîñ)
+                            log("Checking list: " + levels[i]);
+                            if (levels[i] > currentBadge && levels[i] <= ïîñíñóóåîîñ)
                             {
-                                if (item.Key > currentBadge)
-                                {
-                                    currentBadge = item.Key;
-                                }
+                                log("Found badge: " + levels[i]);
+                                currentBadge = levels[i];
                             }
+                            else if (levels[i] > ïîñíñóóåîîñ)
+                            {
+                                log("Exiting");
+                                break;
+                            }
+                            
                         }
                         if (customBadges.TryGetValue(currentBadge, out Texture2D newBadgeTexture))
                         {
+                            log($"Applying custom for -{æìíñèéçñîíí}- -{ïîñíñóóåîîñ}-");
                             __instance.éòëèïòëóæèó.texture = newBadgeTexture;
                         }
 
