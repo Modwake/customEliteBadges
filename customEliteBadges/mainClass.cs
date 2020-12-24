@@ -95,7 +95,9 @@ namespace customEliteBadges
             {
                 log(string.Format("Error loading texture {0}", texName));
                 log(e.Message);
-                return Texture2D.whiteTexture;
+                Texture2D tex = Texture2D.whiteTexture;
+                tex.name = "NOTFOUND";
+                return tex;
             }
         }
 
@@ -109,18 +111,15 @@ namespace customEliteBadges
                     Texture2D newBadgeTexture;
                     //æìíñèéçñîíí = prestige
                     //ïîñíñóóåîîñ = level
-                    log("Got prestige: " + æìíñèéçñîíí);
                     if (æìíñèéçñîíí >= 10)
                     {
-                        int currentBadge = 0;
-                        log("Got level: " + ïîñíñóóåîîñ);
                         int index = ~levels.BinarySearch(ïîñíñóóåîîñ);
-                        log($"-1 : {index - 1}, {index}, +1 {index + 1}");
-                        log("index goes: " + levels[index - 1]);
                         if (customBadges.TryGetValue(levels[index - 1], out newBadgeTexture))
                         {
-                            log($"Applying custom for -{æìíñèéçñîíí}- -{ïîñíñóóåîîñ}-");
-                            __instance.éòëèïòëóæèó.texture = newBadgeTexture;
+                            if (newBadgeTexture.name != "NOTFOUND")
+                            {
+                                __instance.éòëèïòëóæèó.texture = newBadgeTexture;
+                            }
                         }
                         return;
 
