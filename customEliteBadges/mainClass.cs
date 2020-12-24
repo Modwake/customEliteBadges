@@ -38,7 +38,36 @@ namespace customEliteBadges
             harmony.PatchAll();
             initMod();
         }
+        void setMainmenu()
+        {
+            MainMenu mm = FindObjectOfType<MainMenu>();
 
+            try
+            {
+                int.TryParse(mm.mainMenuPres.ToString(), out int prestige);
+                log(prestige.ToString());
+                if (prestige >= 10)
+                {
+                    int.TryParse(mm.mainMenuLevel.ToString(), out int level);
+                    log(level.ToString());
+                    int index = ~levels.BinarySearch(level);
+                    if (customBadges.TryGetValue(levels[index - 1], out Texture2D newBadgeTexture))
+                    {
+                        if (newBadgeTexture.name != "NOTFOUND")
+                        {
+                            mm.menuBadge.texture = newBadgeTexture;
+                        }
+                    }
+                    return;
+
+                }
+            }
+            catch (Exception e)
+            {
+                log("Failed to assign custom badge to a player in main menu");
+                log(e.Message);
+            }
+        }
         void initMod()
         {
             if (File.Exists(Application.dataPath + "/Managed/Mods/customBadges.txt"))
@@ -65,6 +94,7 @@ namespace customEliteBadges
             {
                 createConfig();
             }
+            setMainmenu();
         }
 
         void createConfig()
@@ -75,9 +105,10 @@ namespace customEliteBadges
             }
             if (!File.Exists(Application.dataPath + "/Managed/Mods/customBadges.txt"))
             {
-                string[] lines = { "100=silver", "250=default", "500=diamond" };
+                string[] lines = { "100=silver", "250=eyes", "500=diamond" };
                 File.WriteAllLines(Application.dataPath + "/Managed/Mods/customBadges.txt", lines);
             }
+            initMod();
         }
 
         static Texture2D loadTexture(string texName, int imgWidth, int imgHeight)
