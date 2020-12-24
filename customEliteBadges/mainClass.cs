@@ -75,7 +75,7 @@ namespace customEliteBadges
             }
             if (!File.Exists(Application.dataPath + "/Managed/Mods/customBadges.txt"))
             {
-                string[] lines = { "100=silver", "200=default", "500=eyes" };
+                string[] lines = { "100=silver", "250=default", "500=diamond" };
                 File.WriteAllLines(Application.dataPath + "/Managed/Mods/customBadges.txt", lines);
             }
         }
