@@ -44,12 +44,10 @@ namespace customEliteBadges
 
             try
             {
-                int.TryParse(mm.mainMenuPres.ToString(), out int prestige);
-                log(prestige.ToString());
+                int prestige = íëåäòéðåïîé.åêìóëîñçîèì(íëåäòéðåïîé.îðííçñòêîåï);
                 if (prestige >= 10)
                 {
-                    int.TryParse(mm.mainMenuLevel.ToString(), out int level);
-                    log(level.ToString());
+                    int level = ScoreHandler.ðïíîîðèéóíä(íëåäòéðåïîé.åêìóëîñçîèì(íëåäòéðåïîé.ìòêïíçëóïèí), íëåäòéðåïîé.åêìóëîñçîèì(íëåäòéðåïîé.îðííçñòêîåï));
                     int index = ~levels.BinarySearch(level);
                     if (customBadges.TryGetValue(levels[index - 1], out Texture2D newBadgeTexture))
                     {
