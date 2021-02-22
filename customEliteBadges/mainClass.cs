@@ -24,6 +24,7 @@ namespace customEliteBadges
         static Dictionary<int, Texture2D> customBadges = new Dictionary<int, Texture2D>();
         static List<int> levels = new List<int>();
 
+        static string cfgFilePath = "/Managed/Mods/Configs/customBadges.cfg";
         static string texturesFilePath = "/Managed/Mods/Assets/CustomEliteBadges/";
 
         static void log(string contents)
@@ -68,9 +69,9 @@ namespace customEliteBadges
         }
         void initMod()
         {
-            if (File.Exists(Application.dataPath + "/Managed/Mods/customBadges.txt"))
+            if (File.Exists(Application.dataPath + cfgFilePath))
             {
-                string[] text = File.ReadAllLines(Application.dataPath + "/Managed/Mods/customBadges.txt");
+                string[] text = File.ReadAllLines(Application.dataPath + cfgFilePath);
                 Texture2D newTexture;
                 for (int i = 0; i < text.Length; i++)
                 {
@@ -101,10 +102,10 @@ namespace customEliteBadges
             {
                 Directory.CreateDirectory(Application.dataPath + texturesFilePath);
             }
-            if (!File.Exists(Application.dataPath + "/Managed/Mods/customBadges.txt"))
+            if (!File.Exists(Application.dataPath + cfgFilePath))
             {
                 string[] lines = { "100=silver", "250=eyes", "500=diamond" };
-                File.WriteAllLines(Application.dataPath + "/Managed/Mods/customBadges.txt", lines);
+                File.WriteAllLines(Application.dataPath + cfgFilePath, lines);
             }
             initMod();
         }
